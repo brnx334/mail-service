@@ -1,0 +1,43 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: core-service
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mailing_db
+    username: user
+    password: pass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 1
+      connection-timeout: 5000
+      minimum-idle: 5
+      auto-commit: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+  coreQueue: coreServiceQueue
+  smtpStatusQueue: smtpStatusQueue
+  answeringQueue: answeringServiceQueue
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
